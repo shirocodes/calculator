@@ -16,6 +16,7 @@ function divide(number1, number2) {
 
 // A function that calls the above functions after taking number and operator
 function operate(number1, number2, operator) {
+
     switch (operator){
         case "+":
             return add(number1, number2);
@@ -31,25 +32,28 @@ function operate(number1, number2, operator) {
 }
 
 // Functions that populate display after clicking buttons. Should also store the number
-let displayNumber = "";
-const display = document.getElementById("display");
+// declare the variable to store display number
+document.addEventListener("DOMContentLoaded", () => {
+    let displayNumber = "";        
+    const display = document.getElementById("display");
+// function to change the calc's display based on user input
+    function updateDisplay() {
+        display.textContent = displayNumber === "" ? "0": displayNumber;
+    }
 
-function updateDisplay() {
-    display.textContent = displayNumber || "0";
-}
-// Function to hold button clicks
-const buttonClicks = document.querySelectorAll(".num");
-buttonClicks.forEach(button => {
-    button.addEventListener("click", () => {
-        displayNumber += button.value;
-        updateDisplay();
+    const buttonClicks = document.querySelectorAll(".num"); // selects all buttons and stores them in a nodelist
+    buttonClicks.forEach(button => {      //loops through each button in buttonclicks
+        button.addEventListener("click", () => {
+            displayNumber += button.value;
+            updateDisplay();
+        });
     });
+
 });
-// reset the stored number using "CLEAR" and set the display to "0"
-document.getElementById("clear").addEventListener("click", () => {
-    displayNumber = "";
-    updateDisplay();
-});
+
+//Make the calculator work using the 'operate' function 
+let firstNumber = null; //storing first number input
+
 
 
 
