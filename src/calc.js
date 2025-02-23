@@ -1,58 +1,66 @@
+// functions fo math operators
 function add(number1, number2) {
     return number1 + number2;
 }
 function substract(number1, number2) {
     return number1 - number2;
 }
-function mutiply(number1, number2) {
+function multiply(number1, number2) {
     return number1 * number2;
 }
 function divide(number1, number2) {
     if (number2 === 0) {
-        return "ERROR: Cannot divide by zero"
+        return "Error: Cannot divide by zero";
     }
     return number1/number2;
 }
 
-// A function that calls the above functions after taking number and operator
-function operate(number1, number2, operator) {
+//three variables for the operation 
+let operand1 = null; //when a user clicks first number, it gets stored in this variable....and so on
+let operand2 = null;
+let selectedOperator = null;
 
-    switch (operator){
+// operate function that takes operator, two numbers, and calls the calculation functions
+function operate(operator, number1, number2) {
+    switch(operator) {
         case "+":
-            return add(number1, number2);
+            return add(number1,number2);
         case "-":
-            return substract(number1, number2);
+            return substract(number1,number2);
         case "*":
-            return mutiply(number1, number2);
+            return multiply(number1,number2);
         case "/":
-            return divide(number1, number2);
+            return divide(number1,number2);
         default:
-            return "ERROR: Insert either +, -, *, /";
+            return "Error: Invalid operator"
     }
+
 }
 
-// Functions that populate display after clicking buttons. Should also store the number
-// declare the variable to store display number
-document.addEventListener("DOMContentLoaded", () => {
-    let displayNumber = "";        
-    const display = document.getElementById("display");
-// function to change the calc's display based on user input
-    function updateDisplay() {
-        display.textContent = displayNumber === "" ? "0": displayNumber;
-    }
+// Functions to populate the display when you click digit buttons. 
+const display = document.querySelector("#display"); //select display input field
+const numberButtons = document.querySelectorAll('input[type="button"]:not(.clear, .equal, .operator)')
+const clearButton = document.querySelector(".clear"); //selects the clear button
 
-    const buttonClicks = document.querySelectorAll(".num"); // selects all buttons and stores them in a nodelist
-    buttonClicks.forEach(button => {      //loops through each button in buttonclicks
-        button.addEventListener("click", () => {
-            displayNumber += button.value;
-            updateDisplay();
-        });
+let displayValue = ""; //variable to store the value in display field
+
+function updateDisplay(value) { //function updating display field when number is clicked
+    displayValue += value;
+    display.value = displayValue;
+}
+function clearDisplay() { //function to clear the display
+    displayValue = "";
+    display.value = "";
+}
+
+// event listeners to buttons and clear button
+numberButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        updateDisplay(button.value); //pass the clicked button to display
     });
-
 });
+clearButton.addEventListener("click", clearDisplay); //clear display after clicking clear button
 
-//Make the calculator work using the 'operate' function 
-let firstNumber = null; //storing first number input
 
 
 
